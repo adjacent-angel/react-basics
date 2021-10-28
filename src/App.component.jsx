@@ -1,50 +1,36 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {Component} from 'react';
 
-import Header from './Header.compoment';
-import {capitializeName} from './capitializeName';
+//import for react-router-dom
+import{ Link, Route, Switch } from 'react-router-dom';
+
+// import pages
+import HomePage from './Pages/HomePage.component';
+import AboutPage from './Pages/AboutPage.component';
+import ServicePage from './Pages/ServicePage.component';
+import ServicePageDetails from './Pages/ServicePageDetails.component';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      myState: "Hello World",
-      myName: "Angel",
-      myChild: "Test"
-    }
-    this.changeMyState = this.changeMyState.bind(this);
-  }
+  state = {
 
-  changeMyState(event) {
-    console.log("regular Method", this);
-    event.preventDefault();
-    this.setState({myState: "Goodbye World"})
-  }
-
-  changeMyName = (event) => {
-    console.log("arrow method", this);
-    event.preventDefault();
-    this.setState({myName: "Bob Belcher"});
-  }
-
-  methodOnApp = event => {
-    console.log("methodOnApp", this);
-    event.preventDefault();
-    this.setState({myChild: "Gene Belcher"});
   }
 
   render() { 
     return (
       <div>
-        <h1>{this.state.myState} of React!</h1>
-        <Header 
-          myName={this.state.myName}
-          methodOnApp={this.methodOnApp}>  
-          {capitializeName(this.state.myChild)}
-        </Header>
-        <button onClick={this.changeMyState}>Change my State</button>
-        <button onClick={this.changeMyName}>Change my Name</button>
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/service">Service</Link></li>
+            <li><Link to="/about">About</Link></li>
+          </ul>
+        </nav>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/service" component={ServicePage} />
+          <Route path="/service/:serviceId" component={ServicePageDetails} />
+          <Route path="/about" component={AboutPage} />
+        </Switch>
       </div>
     );
   }
